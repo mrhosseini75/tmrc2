@@ -8,20 +8,19 @@ Temporal diagram
   :align: center
   :alt: temporal_diagram.jpg
    
-At the beginning Launch file ``topological_map_robot_control.launch``,
-starts six nodes and one armor service. The service works directly
-with the ``FSM`` node and the ``topological_map.owl`` map. The service
-allows the ``FSM`` node to modify, check, and load the ``topological_map.owl`` map.
+At the beginning Launch file launch all the nodes and packages except ``finite_state_machine.py``.
+The last one started working automatically with the first launch after 20 sec of delay, this delay is a 
+necessary because simulation needs some time to add a robot model in the environment and make it able to execute 
+function defined in *FSM* node. 
 
-In addition Launch file sets the size of the environment at the ``planner``
-node and the initial position of the robot in the environment at the ``controller_client``
-node. Parameters were used to set the values.
+In the first step **SETUP_MAP**, slam_gmapping subscribe to ``/scan`` and ``/tf`` generated from robot urdf <Gazebo> and
+also my_moveit.cpp subscribe to ``/tf`` information to uses for ``/arm_controller``. At the tip of the robot arm, there is a camera 
+that helps the robot detect marker_id in the world. The image_od acquired by the camera publish to FSM, this node uses
+a service(req & res) to get information about the room id detected. After finishing this step **GO_IN_ROOM** state started and FSM send 
+an action to the move_base package, therefore move_base publishes ``/cmd_vel`` to robot urdf <Gazebo> to move the robot around the map.
+The information related to odometry is sent to robot_state.py and the last node mentioned store information in ``Get_pose.srv``.
 
-``FSM`` node publish ``\target_point`` to ``planner_client``. Planner make a path to use
-different point to reach goal and publish ``\path`` to ``controller_client`` node.
+N.B: There are 5 states in the FSM node, here demonstrated just two of them. At the beginning of each state  ``/arm_movement_state`` and
+``/base_movement_state``are changed and ``/battery_level_state`` after the first state starts consuming.
 
-Nodes in pairs like MOTION PLANNER and MOTION CONTROLLER start working with
-each other through ``SimpleAction``. The first node has role of server and the second 
-node has role of client, client uses ``CALLBACK`` to connect to server and server uses
-``FEEDBACK`` to control status of client.
 
