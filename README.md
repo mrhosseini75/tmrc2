@@ -2,7 +2,7 @@
 
 _Development of the first assignment of experimental robot laboratoy._
 
-Intriduction
+Introduction
 ==============
 This assignment proposes to develop software architecture defined for the first assignment [tmrc1.0](https://github.com/mrhosseini75/tmrc.git).
 In this assignment a Gazebo and Rviz were used to demonstrate robot movements on the map. In addition, in this development, the robot has a manipulator with a camera on board to detect the environment.
