@@ -27,7 +27,7 @@ To solve the following problem I used various tools, like:<br/>
 Documentation
 ==============
 
-For more information on nodes and sofar then refer to [Documentation]
+For more information on nodes and sofar then refer to [Documentation](https://mrhosseini75.github.io/tmrc2/)
 
 Software architecture
 ========================
